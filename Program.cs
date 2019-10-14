@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Text;
+using System;
 using System.IO;
 
 namespace Streams
@@ -10,7 +11,54 @@ namespace Streams
             // Abrir o arquivo animals.txyt
             // Ler 10 bytes do arquivo
             // imprimir no console
+            Lendo10bytes();
 
+
+
+            //Escrever Mensagem
+
+            WriteMessage();
+
+            
+        }
+
+        private static void WriteMessage()
+        {
+            var message = "Hello World!";
+
+            var array = Encoding.UTF8.GetBytes(message);
+            var offset = 0;
+            var count = message.Length;
+
+            using (var fs = new FileStream("output.txt", FileMode.Create, FileAccess.Write))
+            {
+                fs.Write(array, offset, count);
+            }
+        }
+
+        private static void ReadingAction(int offset, int count, byte[] array)
+        {
+            Action<Stream, int, int, byte[]> action = ReadAction();
+
+            using (var fs = new FileStream("animals.txt", FileMode.Open, FileAccess.Read))
+            {
+                action(fs, offset, count, array);
+            }
+        }
+
+        private static Action<Stream, int, int, byte[]> ReadAction()
+        {
+            return (stream, offset, count, arr) =>
+            {
+                stream.Read(arr, offset, count);
+
+                foreach (var @char in arr)
+                    System.Console.Write((char)@char);
+            };
+        }
+
+        private static void Lendo10bytes()
+        {
             using (var fs = new FileStream("animals.txt", FileMode.Open, FileAccess.Read))
             {
                 var offset = 0;
@@ -22,9 +70,9 @@ namespace Streams
                 //Ler primeiros 10 bytes
                 Print(fs, buffer);
 
-                
+
                 //Ler proximos 10 bytes
-                Print(fs, buffer);
+                //  Print(fs, buffer);
             }
         }
 
