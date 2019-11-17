@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO.Compression;
+using System.Text;
 using System;
 using System.IO;
 
@@ -11,15 +12,32 @@ namespace Streams
             // Abrir o arquivo animals.txyt
             // Ler 10 bytes do arquivo
             // imprimir no console
-            Lendo10bytes();
+            //            Lendo10bytes();
 
+            var message = "Hello World!";
 
+            Compactar(message);
+            Descompactar();
+        }
 
-            //Escrever Mensagem
+        private static void Descompactar()
+        {
+            using (var fs = new FileStream("Texto.zip", FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using (var gzipStream = new GZipStream(fs, CompressionMode.Decompress))
+            using (var sw = new StreamReader(gzipStream))
+            {
+                System.Console.WriteLine(sw.ReadToEnd());
+            }
+        }
 
-            WriteMessage();
-
-            
+        private static void Compactar(string message)
+        {
+            using (var fs = new FileStream("Texto.zip", FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using (var gzipStream = new GZipStream(fs, CompressionMode.Compress))
+            using (var sw = new StreamWriter(gzipStream))
+            {
+                sw.Write(message);
+            }
         }
 
         private static void WriteMessage()
