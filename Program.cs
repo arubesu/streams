@@ -9,15 +9,31 @@ namespace Streams
     {
         static void Main(string[] args)
         {
-            // Abrir o arquivo animals.txyt
-            // Ler 10 bytes do arquivo
-            // imprimir no console
-            //            Lendo10bytes();
 
-            var message = "Hello World!";
+        }
 
-            Compactar(message);
-            Descompactar();
+        private static void DriverInfo()
+        {
+            // Drivers Info 
+            var drivers = DriveInfo.GetDrives();
+
+            foreach (var driver in drivers)
+            {
+                //Driver name
+                System.Console.WriteLine($"DriverName {driver.Name}");
+
+                //Status
+                System.Console.WriteLine($"Ready: {driver.IsReady}");
+
+                //Type
+                System.Console.WriteLine($"Type: {driver.DriveType}");
+
+                ///Format
+                System.Console.WriteLine($"Format: {driver.DriveFormat}");
+
+                //size
+                System.Console.WriteLine($"Format: {driver.TotalSize}");
+            }
         }
 
         private static void Descompactar()
